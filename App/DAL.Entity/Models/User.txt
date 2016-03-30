@@ -1,0 +1,20 @@
+﻿using DAL.Repository;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DAL.Entity.Models
+{
+    public class User : EntityBase
+    {
+        [Key]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        public string Email { get; set; }
+        public string DeviceID { get; set; }
+        public string Platform { get; set; }
+
+    }
+}

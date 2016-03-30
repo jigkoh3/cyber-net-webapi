@@ -1,0 +1,54 @@
+﻿using BLL.Service.Interface;
+using DAL.Entity.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+
+namespace PL.WebAPI.Controllers
+{
+    public class UserController : ApiController
+    {
+        private readonly IUserService _userService ;
+
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+        // GET: api/User
+        public IQueryable<User> Get()
+        {
+            return _userService.GetUser().AsQueryable();
+        }
+
+        public User Get(string id)
+        {
+            return _userService.GetUser(id);
+        }
+
+        // POST: api/User
+        public IHttpActionResult Post([FromBody]User value)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _userService.CreateUser(value);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.InnerException.InnerException.Message);
+            }
+            return CreatedAtRoute("DefaultApi", new { id = value }, value);
+        }
+
+
+      
+       
+    }
+}
